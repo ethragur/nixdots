@@ -15,7 +15,7 @@
       flake = false;
     };
     secrets = {
-      url = "path:/home/effi/Documents/Development/nixdots/secrets";
+      url = "git+file:./secrets";
       flake = true;
     };
     nixpak = {

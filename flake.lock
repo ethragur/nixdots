@@ -610,14 +610,16 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1706631559,
-        "narHash": "sha256-IkDgXZktAfY3JbD6NPzFxYb1k96C6HVC3+jIGNi5NC4=",
-        "path": "/home/effi/Documents/Development/nixdots/secrets",
-        "type": "path"
+        "dirtyRev": "7fa0d99cd409ce5b729d40ff080b5dfde007a691-dirty",
+        "dirtyShortRev": "7fa0d99-dirty",
+        "lastModified": 1687887251,
+        "narHash": "sha256-/M9vMJ0XZx5Oxkg69sq3ztFVC2Ut6/giHOMMSwalXug=",
+        "type": "git",
+        "url": "file:./secrets"
       },
       "original": {
-        "path": "/home/effi/Documents/Development/nixdots/secrets",
-        "type": "path"
+        "type": "git",
+        "url": "file:./secrets"
       }
     },
     "stylix": {

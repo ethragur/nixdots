@@ -2,7 +2,6 @@
 {
   imports =
     [
-      ./modules/wireguard.nix
       ./modules/nfsmount.nix
     ];
 
