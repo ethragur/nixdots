@@ -57,6 +57,34 @@
             }
           ];
         };
+        effi-envy = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          system = "x86_64-linux";
+          modules = [
+            ({ config, pkgs, ... }:
+              let
+                overlay-unstable = final: prev: {
+                  unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+                };
+              in
+              {
+                nixpkgs.overlays = [ overlay-unstable ];
+              })
+            home-manager.nixosModules.home-manager
+            stylix.nixosModules.stylix
+            secrets.nixosModules.secrets
+            ./configuration.nix
+            ./hosts/effi-envy/default.nix
+            {
+              nixpkgs.config.allowUnfree = true;
+
+              home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+
+              home-manager.users = builtins.listToAttrs (builtins.map (u: { name = u; value = { imports = [ (import ./home inputs) ]; }; }) secrets.nixosModules.users);
+            }
+          ];
+        };
       };
     };
 }
