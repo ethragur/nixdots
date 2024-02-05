@@ -22,10 +22,19 @@
       url = "github:nixpak/nixpak";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpak-pkgs = {
+      url = "github:nixpak/pkgs";
+      inputs.nixpak.follows = "nixpak";
+    };
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, stylix, secrets, polybar-pulseaudio-control, nixpak, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, stylix, secrets, nix-flatpak, polybar-pulseaudio-control, nixpak, ... }@inputs:
     let inherit (self) outputs;
     in {
       nixosConfigurations = {
@@ -49,10 +58,8 @@
             ./hosts/effi-desktop/default.nix
             {
               nixpkgs.config.allowUnfree = true;
-
               home-manager.useUserPackages = true;
               home-manager.useGlobalPkgs = true;
-
               home-manager.users = builtins.listToAttrs (builtins.map (u: { name = u; value = { imports = [ (import ./home inputs) ]; }; }) secrets.nixosModules.users);
             }
           ];
