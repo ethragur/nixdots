@@ -22,7 +22,6 @@
       wireless.iwd = {
         enable = true;
       };
-      interfaces.wlo1 = { };
       nftables.enable = true;
       firewall = {
         enable = true;

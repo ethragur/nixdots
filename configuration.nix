@@ -3,6 +3,7 @@
   imports =
     [
       ./modules/nfsmount.nix
+      ./modules/tailscale.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -12,13 +13,12 @@
   boot.initrd.kernelModules = [ "" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  hardware.cpu.amd.updateMicrocode = true;
   nix.settings.trusted-users = [ "root" "@wheel" ];
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
   ];
 
+  services.resolved.enable = true;
   #nixpkgs.overlays = [ (import ./overlays/godot.nix) ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -52,18 +52,6 @@
     pulse.enable = true;
   };
 
-  # services.xserver = {
-  #   enable = true;
-  #   xkbVariant = "";
-  #   xkbOptions = "ctrl:nocaps";
-  #   layout = "us";
-  #   libinput.enable = true;
-  #   desktopManager.xterm.enable = false;
-  #   displayManager.startx.enable = false;
-  #   displayManager.sessionPackages = [ ];
-  # };
-
-
   services.greetd = {
     enable = true;
     settings = {
@@ -94,8 +82,6 @@
     htop
   ];
 
-  programs.nix-ld.enable = true;
-
   services.openssh.enable = true;
   services.openssh.ports = [ 222 ];
   services.openssh.settings.PermitRootLogin = "yes";
@@ -108,7 +94,6 @@
     sha256 = "enQo3wqhgf0FEPHj2coOCvo7DuZv+x5rL/WIo4qPI50=";
   };
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-
 
   services.flatpak.enable = true;
 

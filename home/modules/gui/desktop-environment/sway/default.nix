@@ -82,7 +82,7 @@
             };
           }
         ];
-        output = builtins.listToAttrs (map (d: { name = d.wname; value = { adaptive_sync = if (d.vrr == "on") then "on" else "off"; pos = d.posx + " " + d.posy; mode = d.mode + "@" + d.rate + "Hz"; }; }) osConfig.hosts.display.outputs);
+        output = builtins.listToAttrs (map (d: { name = d.wname; value = { adaptive_sync = if (d.vrr == "on") then "on" else "off"; pos = d.posx + " " + d.posy; mode = d.mode + "@" + d.rate + "Hz"; }; }) osConfig.modules.hosts.display.outputs);
         input = {
           "type:keyboard" = {
             xkb_layout = "us";
@@ -101,7 +101,7 @@
             accel_profile = "flat";
           };
         };
-        workspaceOutputAssign = builtins.concatMap (d: map (w: { output = d.wname; workspace = builtins.toString w; }) d.workspaces) osConfig.hosts.display.outputs;
+        workspaceOutputAssign = builtins.concatMap (d: map (w: { output = d.wname; workspace = builtins.toString w; }) d.workspaces) osConfig.modules.hosts.display.outputs;
         keybindings =
           let
             modifier = config.wayland.windowManager.sway.config.modifier;
@@ -342,7 +342,7 @@
           layer = "top";
           position = "top";
           height = 36;
-          output = map (b: b.wname) (builtins.filter (d: d.bar == true) osConfig.hosts.display.outputs);
+          output = map (b: b.wname) (builtins.filter (d: d.bar == true) osConfig.modules.hosts.display.outputs);
           modules-left = [ "clock" "backlight" "memory" "cpu" "temperature" ];
           modules-center = [ "sway/workspaces" ];
           modules-right = [ "pulseaudio" "battery" "network" "tray" ];
