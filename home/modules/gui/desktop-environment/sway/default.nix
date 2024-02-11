@@ -308,6 +308,10 @@
             background: @base02;
         }
 
+        #custom-redshift {
+            background: @base02;
+        }
+
         #clock {
             background: @base02;
             color: @base09;
@@ -343,7 +347,7 @@
           position = "top";
           height = 36;
           output = map (b: b.wname) (builtins.filter (d: d.bar == true) osConfig.hosts.display.outputs);
-          modules-left = [ "clock" "backlight" "memory" "cpu" "temperature" ];
+          modules-left = [ "clock" "backlight" "custom/redshift" "memory" "cpu" "temperature" ];
           modules-center = [ "sway/workspaces" ];
           modules-right = [ "pulseaudio" "battery" "network" "tray" ];
 
@@ -359,6 +363,16 @@
           clock = {
             format = "{:%H:%M}";
             tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          };
+          backlight = {
+            format = "{icon} {percent}%";
+            format-icons = [ "󰃜" "󰃛" "" ];
+          };
+          "custom/redshift" = {
+            format = " {}  ";
+            interval = "once";
+            exec = "if pgrep -x 'wlsunset' > /dev/null; then echo '󰖔'; else echo ''; fi";
+            on-click = "if pgrep -x 'wlsunset' > /dev/null; then pkill wlsunset > /dev/null; else ${pkgs.wlsunset}/bin/wlsunset > /dev/null; fi";
           };
           memory = {
             states = {
@@ -412,6 +426,16 @@
             tooltip-format-ethernet = "{ifname} ";
             tooltip-format-disconnected = "Disconnected";
             max-length = "50";
+          };
+          battery = {
+            bat = "BAT0";
+            interval = 60;
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+            format = "{icon}  {capacity}%";
+            format-icons = [ "" "" "" "" "" ];
           };
           "wlr/taskbar" = {
             "all-outputs" = true;
@@ -468,3 +492,4 @@
     };
   };
 }
+
