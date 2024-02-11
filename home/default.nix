@@ -18,6 +18,7 @@ inputs:
     ./modules/gui/blender.nix
     ./modules/gui/godot.nix
     ./modules/cli/zsh.nix
+    inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   programs.home-manager.enable = true;
@@ -38,9 +39,12 @@ inputs:
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    webcord
-    chromium
   ];
+
+  services.flatpak.update.auto = {
+    enable = true;
+    onCalendar = "weekly"; # Default value
+  };
 
 
   xdg.userDirs = {
