@@ -36,6 +36,13 @@
           yaml-language-server = {
             command = "${pkgs.yaml-language-server}/bin/yaml-language-server";
           };
+          pylsp = {
+            command = "${pkgs.python311Packages.python-lsp-server}/bin/pylsp";
+            auto-format = true;
+            formatter = {
+              command = "${pkgs.python311Packages.black}/bin/black";
+            };
+          };
         };
       };
       settings = {

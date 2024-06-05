@@ -349,14 +349,14 @@
           modules-left = [
             "clock"
             "backlight"
-            (if osConfig.modules.hosts.isLaptop then "custom/redshift" else null)
+            (if osConfig.modules.hosts.isLaptop then "custom/redshift" else "")
             "memory"
             "cpu"
             "temperature"
           ];
           output = map (b: b.wname) (builtins.filter (d: d.bar == true) osConfig.modules.hosts.display.outputs);
           modules-center = [ "sway/workspaces" ];
-          modules-right = [ "pulseaudio" (if osConfig.modules.hosts.isLaptop then "battery" else null) "network" "tray" ];
+          modules-right = [ "pulseaudio" (if osConfig.modules.hosts.isLaptop then "battery" else "") "network" "tray" ];
           "sway/workspaces" = {
             format = "{icon}";
             icon-size = 18;

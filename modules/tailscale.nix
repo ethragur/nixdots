@@ -5,6 +5,7 @@
   '';
 
   options.modules.tailscale.authkey = lib.mkOption { type = lib.types.str; };
+  options.modules.tailscale.exitnode = lib.mkOption { type = lib.types.bool; default = false; };
 
   config = lib.mkIf config.modules.nfsmount.enable {
     # make the tailscale command usable to users
@@ -40,7 +41,7 @@
         fi
 
         # otherwise authenticate with tailscale
-        ${tailscale}/bin/tailscale up -authkey ${config.modules.tailscale.authkey}
+        ${tailscale}/bin/tailscale up -authkey ${config.modules.tailscale.authkey} ${if config.modules.tailscale.exitnode then "--advertise-exit-node" else ""}
       '';
     };
 

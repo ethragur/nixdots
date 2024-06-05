@@ -86,7 +86,7 @@
   services.openssh.ports = [ 222 ];
   services.openssh.settings.PermitRootLogin = "yes";
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
 
   stylix.image = pkgs.fetchurl {
@@ -96,13 +96,19 @@
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
 
   services.flatpak.enable = true;
-
   environment.etc.hosts.mode = "0644";
 
   security.pam.services.swaylock = { };
   xdg = {
     portal = {
-      wlr.enable = true;
+      wlr = {
+        enable = true;
+        settings = {
+          screencast = {
+            max_fps = 30;
+          };
+        };
+      };
       enable = true;
       xdgOpenUsePortal = true;
       extraPortals = with pkgs; [

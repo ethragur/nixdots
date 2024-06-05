@@ -10,7 +10,26 @@
       flameshot
       imv
       zathura
+      gnome.nautilus
     ];
+
+    gtk = {
+      enable = true;
+      theme = {
+        package = pkgs.rose-pine-gtk-theme;
+        name = "rose-pine-moon";
+      };
+      iconTheme = {
+        package = pkgs.rose-pine-icon-theme;
+        name = "rose-pine";
+      };
+      font = {
+        inherit (config.stylix.fonts.sansSerif) package name;
+        size = config.stylix.fonts.sizes.applications;
+      };
+    };
+
+    home.sessionVariables.GTK_THEME = "rose-pine-moon";
 
     services.dunst = {
       enable = true;
@@ -42,11 +61,11 @@
           hide_duplicate_count = "yes";
           show_indicators = "no";
           icon_position = "left";
-          icon_theme = "Adwaita-dark";
+          icon_theme = "rose-pine-icons";
           sticky_history = "yes";
           history_length = 20;
           history = "ctrl+grave";
-          browser = "google-chrome-stable";
+          browser = "firefox";
           always_run_script = true;
           title = "Dunst";
           class = "Dunst";

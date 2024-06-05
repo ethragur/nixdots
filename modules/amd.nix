@@ -8,14 +8,15 @@
     nixpkgs.config.allowUnfree = true;
     boot.kernelModules = [ "kvm-amd" "amdgpu" ];
     hardware.opengl.extraPackages = with pkgs; [
-      rocmPackages.miopen-opencl
       rocmPackages.rocm-runtime
       rocmPackages.rocminfo
+      rocmPackages.clr
+      rocmPackages.clr.icd
     ];
     services.xserver.videoDrivers = [ "amdgpu" ];
 
     systemd.tmpfiles.rules = [
-      "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+      "L+    /opt/rocm/hip -    -    -     -    ${pkgs.rocmPackages.clr}"
     ];
     programs.corectrl = {
       enable = true;
@@ -27,5 +28,6 @@
 
   };
 }
+
 
 

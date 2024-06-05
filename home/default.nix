@@ -1,5 +1,5 @@
 inputs:
-{ config, pkgs, lib, osConfig, ... }:
+{ config, pkgs, lib, osConfig, flake-inputs, ... }:
 {
 
   imports = [
@@ -18,7 +18,7 @@ inputs:
     ./modules/gui/blender.nix
     ./modules/gui/godot.nix
     ./modules/cli/zsh.nix
-    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    flake-inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   programs.home-manager.enable = true;
@@ -36,15 +36,17 @@ inputs:
   modules.gui.firefox.enable = true;
   modules.gui.mpv.enable = true;
 
+  services.flatpak.enable = true;
+
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
   ];
 
-  services.flatpak.update.auto = {
-    enable = true;
-    onCalendar = "weekly"; # Default value
-  };
+  # services.flatpak.update.auto = {
+  # enable = true;
+  # onCalendar = "weekly"; # Default value
+  # };
 
 
   xdg.userDirs = {

@@ -45,9 +45,9 @@
 
   };
 
-  modules.nfsmount = {
-    enable = true;
-    from = "192.168.0.199:/data";
-    to = "/mnt/nfs";
-  };
+  # modules.nfsmount = {
+  # enable = true;
+  # from = "192.168.0.199:/data";
+  # to = "/mnt/nfs";
+  # };
 }
