@@ -1,8 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
@@ -37,15 +37,6 @@
           specialArgs = { inherit inputs; };
           system = "x86_64-linux";
           modules = [
-            # ({ config, pkgs, ... }:
-            #   let
-            #     overlay-unstable = final: prev: {
-            #       unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
-            #     };
-            #   in
-            #   {
-            #     nixpkgs.overlays = [ overlay-unstable ];
-            #   })
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
             secrets.nixosModules.secrets
@@ -60,20 +51,30 @@
             }
           ];
         };
+        effi-steamdeck = nixpkgs.lib.nixosSystem
+          {
+            specialArgs = { inherit inputs; };
+            system = "x86_64-linux";
+            modules = [
+              home-manager.nixosModules.home-manager
+              stylix.nixosModules.stylix
+              secrets.nixosModules.secrets
+              ./configuration.nix
+              ./hosts/effi-steamdeck/default.nix
+              {
+                nixpkgs.config.allowUnfree = true;
+                home-manager.useUserPackages = true;
+                home-manager.useGlobalPkgs = true;
+                home-manager.extraSpecialArgs.flake-inputs = inputs;
+                home-manager.users = builtins.listToAttrs (builtins.map (u: { name = u; value = { imports = [ (import ./home inputs) ]; }; }) secrets.nixosModules.users);
+              }
+            ];
+          };
         effi-envy = nixpkgs.lib.nixosSystem
           {
             specialArgs = { inherit inputs; };
             system = "x86_64-linux";
             modules = [
-              # ({ config, pkgs, ... }:
-              # let
-              #   overlay-unstable = final: prev: {
-              #     unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
-              #   };
-              # in
-              # {
-              #   nixpkgs.overlays = [ overlay-unstable ];
-              # })
               home-manager.nixosModules.home-manager
               stylix.nixosModules.stylix
               secrets.nixosModules.secrets

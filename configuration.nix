@@ -20,9 +20,9 @@
 
   services.resolved.enable = true;
   #nixpkgs.overlays = [ (import ./overlays/godot.nix) ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  virtualisation.podman.enable = true;
+  # virtualisation.podman.enable = true;
 
 
   # Pick only one of the below networking options.
@@ -52,15 +52,15 @@
     pulse.enable = true;
   };
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway --sessions  ${config.services.xserver.displayManager.sessionData.desktops}/share/xsessions:${config.services.xserver.displayManager.sessionData.desktops}/share/wayland-sessions";
-        user = "greeter";
-      };
-    };
-  };
+  # services.greetd = {
+  # enable = true;
+  # settings = {
+  # default_session = {
+  # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway --sessions  ${config.services.xserver.displayManager.sessionData.desktops}/share/xsessions:${config.services.xserver.displayManager.sessionData.desktops}/share/wayland-sessions";
+  # user = "greeter";
+  # };
+  # };
+  # };
   environment.etc."greetd/environments".text = ''
     sway
     zsh
